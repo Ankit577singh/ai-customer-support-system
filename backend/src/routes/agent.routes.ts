@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import {
   getAgents,
   getAgentCapabilities,
-} from "../controllers/agent.controller";
+} from "../controllers/agent.controller.js";
 
 const agentRoutes = new Hono();
 
