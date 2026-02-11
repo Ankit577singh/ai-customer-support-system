@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("DATABASE_URL")
+}
+
+model User {
+  id            String        @id
+  conversations Conversation[]
+  orders        Order[]
+}
+
+model Conversation {
+  id             String   @id
+  userId         String
+  activeOrderId  String?
+  lastAgent      String?
+  messages       Message[]
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id             String   @id @default(uuid())
+  conversationId String
+  role           String
+  content        String
+  agentType      String?
+  createdAt      DateTime @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+}
+
+model Order {
+  id        String @id
+  userId    String
+  status    String
+
+  user User @relation(fields: [userId], references: [id])
+  payment Payment?
+}
+
+model Payment {
+  id           String @id
+  orderId      String @unique
+  refundStatus String
+
+  order Order @relation(fields: [orderId], references: [id])
+}
