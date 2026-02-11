@@ -49,7 +49,6 @@ export async function handleChat(
   else if (intent.toLowerCase().includes("billing")) {
     // Get activeOrderId from conversation
     const conv = await ConversationRepo.findById(conversationId);
-console.log(conv.activeOrderId);
     if (conv?.activeOrderId) {
       const payment = await PaymentRepo.getPaymentByOrderId(conv.activeOrderId);
       reply = await billingAgent(message, payment);
