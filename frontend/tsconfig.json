@@ -1,15 +1,10 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "tsBuildInfoFile": "./node_modules/.cache/typescript/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -18,13 +13,14 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Relaxed Linting - Ab errors nahi aayenge */
+    
     "strict": false,
     "noImplicitAny": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noFallthroughCasesInSwitch": false,
-    "allowJs": true
+    "allowJs": true,
+    "checkJs": false,
+    "emitDeclarationOnly": false
   },
   "include": ["src"]
 }
