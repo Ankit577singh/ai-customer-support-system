@@ -1,176 +1,147 @@
-# AI-Powered Customer Support System  
- 
+# AI Customer Support System (Full Stack)
+
+A full-stack AI-powered customer support system built using:
+
+- Frontend: React + Vite + Tailwind CSS
+- Backend: Hono + TypeScript
+- Database: PostgreSQL (Prisma ORM)
+- Deployment: Vercel (Frontend) + Render (Backend & DB)
+
+The system uses a multi-agent routing architecture to classify and delegate user queries dynamically.
 
 ---
 
-##  Overview
+# 🚀 Live Demo
 
-This project is an AI-powered customer support system built using a multi-agent architecture.  
-A Router Agent analyzes incoming user messages and delegates them to specialized sub-agents:
-
-- Support Agent
-- Order Agent
-- Billing Agent
-
-The system maintains conversational context and persists all conversations and messages in the database.
+Frontend: https://ai-customer-support-system-nine.vercel.app/ 
+Backend API: https://ai-customer-support-system-8ijp.onrender.com  
 
 ---
 
-##  Architecture
+#  Architecture Overview
 
-The backend follows a **Controller-Service pattern** with clean separation of concerns.
+User → Frontend (React)  
+↓  
+Backend (Hono API)  
+↓  
+Router Agent (Intent Classification)  
+↓  
+Specialized Agents (Order / Billing / Support)  
+↓  
+PostgreSQL (via Prisma ORM)
 
-### Structure
+---
 
-backend/
+#  Project Structure
+
+root/
 │
-├── src/
-│   ├── agents/          # Router + Sub-agents
-│   ├── controllers/     # API Controllers
-│   ├── services/        # Business Logic
-│   ├── repositories/    # Database Access Layer
-│   ├── routes/          # API Routes
-│   ├── middleware/      # Error handling middleware
-│   ├── db.ts            # Prisma client
-│   └── app.ts           # Server entry
+├── frontend/
+│ ├── src/
+│ │ ├── components/
+│ │ ├── pages/
+│ │ ├── hooks/
+│ │ ├── services/
+│ │ └── main.tsx
+│ ├── index.html
+│ ├── vite.config.ts
+│ └── package.json
 │
-├── prisma/
-│   ├── schema.prisma
-│   └── seed.ts
-
----
-
-##  Multi-Agent System
-
-###  Router Agent
-- Analyzes incoming message
-- Classifies intent (order / billing / support)
-- Delegates to appropriate sub-agent
-- Handles fallback
-
-###  Support Agent
-Handles:
-- General support
-- FAQs
-- Troubleshooting
-
-Tool Access:
-- Conversation history
-
----
-
-### Order Agent
-Handles:
-- Order status
-- Tracking
-- Cancellations
-- Modifications
-
-Tool Access:
-- Fetch order details
-- Delivery status
-
----
-
-###  Billing Agent
-Handles:
-- Payment issues
-- Refunds
-- Invoice queries
-
-Tool Access:
-- Invoice details
-- Refund status
-
----
-
-## Agent Tools
-
-Each sub-agent uses tools that query real data from the database.
-
-Mock data is seeded using Prisma.
-
-Database includes:
-- Users
-- Conversations
-- Messages
-- Orders
-- Payments
-
----
-
-##  Database
-
-- PostgreSQL
-- Prisma ORM
-- Seeded with sample users, orders, payments, conversations
-
----
-
-##  API Endpoints
-
-Base Route: `/api`
-
-### Chat
-
-| Method | Endpoint | Description |
-|--------|----------|------------|
-| POST | /chat/messages | Send new message |
-| GET | /chat/conversations/:id | Get conversation history |
-| GET | /chat/conversations | List conversations |
-| DELETE | /chat/conversations/:id | Delete conversation |
-
----
-
-### Agents
-
-| Method | Endpoint | Description |
-|--------|----------|------------|
-| GET | /agents | List available agents |
-| GET | /agents/:type/capabilities | Agent capabilities |
-
----
+├── backend/
+│ ├── prisma/
+│ │ └── schema.prisma
+│ │
+│ ├── src/
+│ │ ├── routes/
+│ │ ├── services/
+│ │ │ ├── router.service.ts
+│ │ │ ├── order.service.ts
+│ │ │ ├── billing.service.ts
+│ │ │ └── support.service.ts
+│ │ ├── repositories/
+│ │ ├── lib/
+│ │ └── index.ts
+│ │
+│ ├── package.json
+│ ├── tsconfig.json
+│ └── .env
+│
+└── README.md
 
 
 
 ---
 
-##  Frontend
+#  Multi-Agent Routing Logic
 
-- React + Vite
-- Basic chat UI
-- Typing indicator
-- Message history
-- API integration with proxy
+The system uses a router agent as the entry point for all user messages.
 
----
+1. The router analyzes the user message.
+2. It classifies the intent (order, billing, or support).
+3. Based on the classification, it delegates the request to a specialized agent.
+4. Each agent interacts with the database using Prisma.
+5. The final response is returned to the frontend.
 
-##  Conversation Context
-
-- Each message is persisted in the database
-- Context is fetched per conversation
-- Agents use previous conversation history when responding
+This modular architecture ensures scalability and separation of concerns.
 
 ---
 
-##  Tech Stack
+#  Environment Variables
 
-Frontend:
-- React (Vite)
-- TailwindCSS
+## Backend (.env)
 
-Backend:
-- Hono.dev
-- Controller-Service Pattern
-- Error Middleware
+DATABASE_URL=database_url
+API_KEY=ai_api_key
+PORT=3000
 
-Database:
-- PostgreSQL
-- Prisma ORM
 
-AI:
-- Rule-based routing (for assignment version)
+## Frontend (.env)
+
+VITE_API_URL=backend_url
+
+⚠ In production, these are configured in Vercel and Render dashboards.
 
 ---
+
+# 🛠 Backend Setup Instructions
+
+1️. Navigate to backend: cd backend
+
+2️. Install dependencies: npm install
+
+3️. Setup database:   npx prisma migrate dev , npx prisma generate
+
+4️. Run development server: npm run dev
+
+
+Server runs at: http://localhost:3000
+
+
+---
+
+# 🛠 Frontend Setup Instructions
+
+1️. Navigate to frontend: cd frontend
+
+2️. Install dependencies: npm install
+
+3. Run development server: npm run dev
+
+Frontend runs at: http://localhost:5173
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
